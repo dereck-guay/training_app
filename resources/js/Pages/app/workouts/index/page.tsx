@@ -6,7 +6,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Head } from '@inertiajs/react';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import WorkoutsTable from './components/WorkoutsTable';
 import { WorkoutsContext } from './page.hook';
 
@@ -15,21 +15,6 @@ interface WorkoutIndexPageProps {
 }
 
 const WorkoutIndexPage: FC<WorkoutIndexPageProps> = ({ workouts }) => {
-    useEffect(() => {
-        async function getData() {
-            const res = await fetch(
-                route('generic.list', {
-                    entity: 'Exercise',
-                }),
-            );
-
-            const data = await res.json();
-            console.log(data);
-        }
-
-        getData();
-    }, []);
-
     return (
         <WorkoutsContext.Provider value={workouts}>
             <Head title="Workouts" />

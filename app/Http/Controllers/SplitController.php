@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exercise;
 use App\Models\Split;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,9 @@ class SplitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $splits = Split::search();
+        $splits = Split::search($request->all());
 
         return inertia('app/splits/index/page', compact(
             'splits',
@@ -40,6 +41,7 @@ class SplitController extends Controller
      */
     public function show(Split $split)
     {
+        $split->load('exercises');
         return inertia('app/splits/show/page', compact(
             'split',
         ));

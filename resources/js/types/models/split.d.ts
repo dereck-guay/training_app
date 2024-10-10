@@ -8,4 +8,5 @@ type Split = {
     updated_at: string
 
     workouts: Workout[] | null;
+    exercises: Exercise[]
 }
