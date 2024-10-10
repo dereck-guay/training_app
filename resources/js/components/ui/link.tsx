@@ -10,7 +10,7 @@ const Link: FC<LinkProps> = ({ className, children, ...rest }) => {
     return (
         <InertiaLink
             className={cn(
-                'inline-flex items-center gap-2 hover:underline',
+                'inline-flex items-center gap-2 hover:text-primary transition-colors',
                 className,
             )}
             {...rest}

@@ -5,6 +5,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import { Head } from '@inertiajs/react';
 import { FC } from 'react';
 import SplitsTable from './components/SplitsTable';
 import { SplitsContext } from './page.hook';
@@ -16,6 +17,7 @@ interface SplitIndexPageProps {
 const SplitIndexPage: FC<SplitIndexPageProps> = ({ splits }) => {
     return (
         <SplitsContext.Provider value={splits}>
+            <Head title="Splits" />
             <Card>
                 <CardHeader>
                     <CardTitle>Splits</CardTitle>

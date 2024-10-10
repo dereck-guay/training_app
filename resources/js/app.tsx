@@ -4,8 +4,8 @@ import './bootstrap';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
-import AuthLayout from './pages/layout/AuthLayout';
 import AppLayout from './pages/layout/AppLayout';
+import AuthLayout from './pages/layout/AuthLayout';
 import GuestLayout from './pages/layout/GuestLayout';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';

@@ -40,6 +40,8 @@ class WorkoutController extends Controller
      */
     public function show(Workout $workout)
     {
+        $workout->load('split');
+
         return inertia('app/workouts/show/page', compact(
             'workout',
         ));

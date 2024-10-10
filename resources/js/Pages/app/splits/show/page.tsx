@@ -1,3 +1,4 @@
+import { Head } from '@inertiajs/react';
 import { FC } from 'react';
 
 interface SplitShowPageProps {
@@ -5,7 +6,13 @@ interface SplitShowPageProps {
 }
 
 const SplitShowPage: FC<SplitShowPageProps> = ({ split }) => {
-    return <div>{split.name}</div>;
+    return (
+        <div>
+            <Head title={split.name} />
+
+            <div>{split.name}</div>
+        </div>
+    );
 };
 
 export default SplitShowPage;
