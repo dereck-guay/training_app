@@ -1,12 +1,11 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
-export default function Register() {
+const RegisterPage = () => {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -23,99 +22,117 @@ export default function Register() {
     };
 
     return (
-        <GuestLayout>
+        <Card className="w-[500px]">
+            <CardHeader>
+                <CardTitle>Register</CardTitle>
+            </CardHeader>
+
             <Head title="Register" />
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
+            <CardContent>
+                <form onSubmit={submit} className="flex flex-col gap-2">
+                    <div>
+                        <Label htmlFor="name">Name</Label>
+                        <Input
+                            autoFocus
+                            id="name"
+                            type="name"
+                            name="name"
+                            value={data.name}
+                            autoComplete="username"
+                            onChange={(e) => setData('name', e.target.value)}
+                        ></Input>
 
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
+                        {errors.name && (
+                            <small className="text-destructive">
+                                {errors.name}
+                            </small>
+                        )}
+                    </div>
 
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
+                    <div>
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                            autoFocus
+                            id="email"
+                            type="email"
+                            name="email"
+                            value={data.email}
+                            autoComplete="useremail"
+                            onChange={(e) => setData('email', e.target.value)}
+                        ></Input>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                        {errors.email && (
+                            <small className="text-destructive">
+                                {errors.email}
+                            </small>
+                        )}
+                    </div>
 
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
+                    <div>
+                        <Label htmlFor="password">Password</Label>
+                        <Input
+                            autoFocus
+                            id="password"
+                            type="password"
+                            name="password"
+                            value={data.password}
+                            autoComplete="new-password"
+                            onChange={(e) =>
+                                setData('password', e.target.value)
+                            }
+                        ></Input>
 
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
+                        {errors.password && (
+                            <small className="text-destructive">
+                                {errors.password}
+                            </small>
+                        )}
+                    </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <div>
+                        <Label htmlFor="password_confirmation">
+                            Confirm Password
+                        </Label>
+                        <Input
+                            autoFocus
+                            id="password_confirmation"
+                            type="password_confirmation"
+                            name="password_confirmation"
+                            value={data.password_confirmation}
+                            autoComplete="new-password"
+                            onChange={(e) =>
+                                setData('password_confirmation', e.target.value)
+                            }
+                        ></Input>
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
+                        {errors.password_confirmation && (
+                            <small className="text-destructive">
+                                {errors.password_confirmation}
+                            </small>
+                        )}
+                    </div>
 
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
+                    <div className="mt-4 flex items-center justify-end">
+                        <Link
+                            href={route('login')}
+                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
+                            Already registered?
+                        </Link>
 
-                <div className="mt-4">
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
-                        required
-                    />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
-                </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                    <Link
-                        href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
+                        <Button
+                            type="submit"
+                            className="ms-4"
+                            disabled={processing}
+                        >
+                            Register
+                        </Button>
+                    </div>
+                </form>
+            </CardContent>
+        </Card>
     );
-}
+};
+
+export default RegisterPage;
