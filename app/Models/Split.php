@@ -12,6 +12,8 @@ class Split extends Model
     use HasFactory;
     use SearchableTrait;
 
+    protected $guarded = [];
+
     protected static function booted()
     {
         static::addGlobalScope(new UserOwnedScope);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exercise;
 use App\Models\Split;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SplitController extends Controller
 {
@@ -33,7 +34,17 @@ class SplitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validData = $request->validate([
+            'name' => 'required',
+            'description' => '',
+        ]);
+
+        $newSplit = Split::create([
+            ...$validData,
+            'user_id' => Auth::id()
+        ]);
+
+        return to_route('splits.index');
     }
 
     /**
@@ -60,7 +71,17 @@ class SplitController extends Controller
      */
     public function update(Request $request, Split $split)
     {
-        //
+        $validData = $request->validate([
+            'name' => 'required',
+            'description' => '',
+        ]);
+
+        $split->update([
+            ...$validData,
+            'user_id' => Auth::id()
+        ]);
+
+        return to_route('splits.index');
     }
 
     /**
@@ -68,6 +89,12 @@ class SplitController extends Controller
      */
     public function destroy(Split $split)
     {
-        //
+        $split->workouts()->delete();
+
+        $split->exercises()->detach();
+
+        $split->delete();
+
+        return to_route('splits.index');
     }
 }

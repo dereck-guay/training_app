@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { SheetTrigger } from '@/components/ui/sheet';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { router } from '@inertiajs/react';
@@ -29,10 +30,12 @@ const SplitsToolbar = () => {
                 />
             </div>
             <div>
-                <Button>
-                    <FontAwesomeIcon icon={faPlusCircle} />
-                    New Split
-                </Button>
+                <SheetTrigger asChild>
+                    <Button>
+                        <FontAwesomeIcon icon={faPlusCircle} />
+                        New Split
+                    </Button>
+                </SheetTrigger>
             </div>
         </div>
     );

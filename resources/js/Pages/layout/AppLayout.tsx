@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/toaster';
 import { faDumbbell, faFolderTree } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Grid2X2 } from 'lucide-react';
@@ -35,6 +36,7 @@ const AppLayout: AppLayoutProps = ({ children }) => {
             <div className="h-screen grow overflow-y-auto bg-muted/40 p-4">
                 <Navbar />
                 <main className="pt-4">{children}</main>
+                <Toaster />
             </div>
         </div>
     );
