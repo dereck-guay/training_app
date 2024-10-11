@@ -13,6 +13,8 @@ class Workout extends Model
     use HasFactory;
     use SearchableTrait;
 
+    protected $guarded = [];
+
     protected static function booted()
     {
         static::addGlobalScope(new UserOwnedScope);
@@ -26,7 +28,7 @@ class Workout extends Model
     static public function search($params = [])
     {
         $query = self::query()->select('workouts.*');
-        $query->join('splits', 'splits.id', 'workouts.split_id');
+        $query->leftJoin('splits', 'splits.id', 'workouts.split_id');
 
         self::process_keywords(
             $query,
@@ -38,6 +40,6 @@ class Workout extends Model
         );
 
         $query->with('split');
-        return $query->get();
+        return $query->latest()->get();
     }
 }

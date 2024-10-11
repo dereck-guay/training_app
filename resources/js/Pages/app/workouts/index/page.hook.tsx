@@ -22,7 +22,7 @@ export function useWorkoutsContext() {
         // Trigger a modal
 
         router.delete(
-            route('workout.destroy', {
+            route('workouts.destroy', {
                 workout: workout.id,
             }),
             {

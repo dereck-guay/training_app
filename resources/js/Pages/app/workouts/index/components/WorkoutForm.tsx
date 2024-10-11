@@ -12,6 +12,7 @@ import {
 import { SheetClose } from '@/components/ui/sheet';
 import { useForm } from '@inertiajs/react';
 import axios from 'axios';
+import { format } from 'date-fns';
 import { FC, FormEvent, useEffect, useState } from 'react';
 
 interface WorkoutFormProps {
@@ -21,7 +22,9 @@ interface WorkoutFormProps {
 
 const WorkoutForm: FC<WorkoutFormProps> = ({ workout, onSave }) => {
     const { data, setData, post, processing, errors, put } = useForm({
-        datetime: workout?.datetime ?? '',
+        datetime: workout?.datetime
+            ? workout.datetime
+            : format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
         split_id: workout?.split_id ?? '',
         calories: workout?.calories ?? '',
         time: workout?.calories ?? '',
@@ -45,7 +48,7 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ workout, onSave }) => {
         e.preventDefault();
 
         const options = {
-            onFinish: () => onSave(),
+            onSuccess: () => onSave(),
         };
 
         if (!!workout) {
@@ -66,7 +69,13 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ workout, onSave }) => {
             <div className="grid grid-cols-12 gap-4">
                 <div className="col-span-full">
                     <Label htmlFor="datetime">Date</Label>
-                    <DateTimePicker />
+                    <DateTimePicker
+                        hasTime={true}
+                        value={data.datetime}
+                        onChange={(newDate) =>
+                            setData('datetime', newDate ?? '')
+                        }
+                    />
                     {errors.datetime && (
                         <small className="text-destructive">
                             {errors.datetime}
@@ -77,24 +86,40 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ workout, onSave }) => {
                     <Label htmlFor="split_id">Split</Label>
                     <Select
                         name="split_id"
-                        value={data.split_id.toString()}
-                        onValueChange={(value) => setData('split_id', value)}
+                        value={data.split_id?.toString()}
+                        onValueChange={(value) => {
+                            setData(
+                                'split_id',
+                                value == '' ? '' : Number(value),
+                            );
+                        }}
                     >
                         <SelectTrigger id="split_id">
-                            <SelectValue placeholder="Split" />
+                            <SelectValue placeholder="No split" />
                         </SelectTrigger>
                         <SelectContent>
-                            {!!splits &&
-                                splits.map((s) => (
-                                    <SelectItem
-                                        key={s.id}
-                                        value={s.id.toString()}
-                                    >
-                                        {s.name}
+                            {!!splits && (
+                                <>
+                                    <SelectItem key={'empty'} value={'-1'}>
+                                        No split
                                     </SelectItem>
-                                ))}
+                                    {splits.map((s) => (
+                                        <SelectItem
+                                            key={s.id}
+                                            value={s.id.toString()}
+                                        >
+                                            {s.name}
+                                        </SelectItem>
+                                    ))}
+                                </>
+                            )}
                         </SelectContent>
                     </Select>
+                    {errors.split_id && (
+                        <small className="text-destructive">
+                            {errors.split_id}
+                        </small>
+                    )}
                 </div>
                 <div className="col-span-6">
                     <Label htmlFor="calories">Name</Label>
@@ -102,8 +127,10 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ workout, onSave }) => {
                         type="number"
                         id="calories"
                         name="calories"
-                        value={data.calories}
-                        onChange={(e) => setData('calories', e.target.value)}
+                        value={data.calories?.toString()}
+                        onChange={(e) =>
+                            setData('calories', Number(e.target.value))
+                        }
                         placeholder="Calories spent"
                     />
                     {errors.calories && (
@@ -118,8 +145,10 @@ const WorkoutForm: FC<WorkoutFormProps> = ({ workout, onSave }) => {
                         type="number"
                         id="time"
                         name="time"
-                        value={data.time}
-                        onChange={(e) => setData('time', e.target.value)}
+                        value={data.time?.toString()}
+                        onChange={(e) =>
+                            setData('time', Number(e.target.value))
+                        }
                         placeholder="Time spent"
                     />
                     {errors.time && (

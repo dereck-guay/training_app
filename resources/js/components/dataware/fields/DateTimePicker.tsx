@@ -13,20 +13,22 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { FC, useState } from 'react';
 
-type DateTimePickerProps = FC<{
-    field?: any;
+type DateTimePickerProps = {
+    value?: string | null; // Accepts the SQL date string.
+    onChange?: (date: string | null) => void; // Outputs a SQL date string.
     size?: 'default' | 'sm';
     hasTime?: boolean;
     className?: string;
     placeholder?: string;
-}>;
+};
 
-const DateTimePicker: DateTimePickerProps = ({
-    field,
+const DateTimePicker: FC<DateTimePickerProps> = ({
+    value,
+    onChange,
     size,
     hasTime,
     className,
@@ -44,6 +46,14 @@ const DateTimePicker: DateTimePickerProps = ({
         i.toString().padStart(2, '0'),
     );
 
+    const parseSQLDate = (dateStr: string): Date => {
+        return parse(dateStr, 'yyyy-MM-dd HH:mm:ss', new Date());
+    };
+
+    const formatSQLDate = (date: Date): string => {
+        return format(date, 'yyyy-MM-dd HH:mm:ss');
+    };
+
     const handleDateSelect = (date: Date | undefined) => {
         if (date) {
             const newDate = new Date(date);
@@ -53,26 +63,26 @@ const DateTimePicker: DateTimePickerProps = ({
                 newDate.setMinutes(parseInt(selectedMinute, 10));
             }
 
-            if (!field) return;
-            field.onChange(newDate);
+            const formattedDate = formatSQLDate(newDate);
+            onChange?.(formattedDate);
         }
     };
 
     const handleHourChange = (hour: string) => {
         setSelectedHour(hour);
-        if (field && field.value) {
-            const newDate = new Date(field.value);
+        if (value) {
+            const newDate = parseSQLDate(value);
             newDate.setHours(parseInt(hour, 10));
-            field.onChange(newDate);
+            onChange?.(formatSQLDate(newDate));
         }
     };
 
     const handleMinuteChange = (minute: string) => {
         setSelectedMinute(minute);
-        if (field && field.value) {
-            const newDate = new Date(field.value);
+        if (value) {
+            const newDate = parseSQLDate(value);
             newDate.setMinutes(parseInt(minute, 10));
-            field.onChange(newDate);
+            onChange?.(formatSQLDate(newDate));
         }
     };
 
@@ -84,16 +94,16 @@ const DateTimePicker: DateTimePickerProps = ({
                     variant={'outline'}
                     className={cn(
                         'w-full justify-start text-left font-normal',
-                        !!field && !field.value && 'text-muted-foreground',
+                        !value && 'text-muted-foreground',
                         className,
                     )}
                 >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {field && field.value ? (
+                    {value ? (
                         <span className="text-sm">
                             {hasTime
-                                ? format(field.value, 'PPP HH:mm')
-                                : format(field.value, 'PPP')}
+                                ? format(parseSQLDate(value), 'PPP H:mm aa')
+                                : format(parseSQLDate(value), 'PPP')}
                         </span>
                     ) : (
                         <span className="text-sm text-muted-foreground">
@@ -107,7 +117,7 @@ const DateTimePicker: DateTimePickerProps = ({
             <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
                     mode="single"
-                    selected={field?.value}
+                    selected={value ? parseSQLDate(value) : undefined}
                     onSelect={handleDateSelect}
                     initialFocus
                 />

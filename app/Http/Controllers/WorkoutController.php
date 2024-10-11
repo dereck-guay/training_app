@@ -32,7 +32,16 @@ class WorkoutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validData = $request->validate([
+            'datetime' => 'required|date',
+            'split_id' => 'numeric|nullable',
+            'calories' => 'numeric|nullable',
+            'time' => 'numeric|nullable',
+        ]);
+
+        $request->user()->workouts()->create($validData);
+
+        return to_route('workouts.index');
     }
 
     /**
@@ -60,7 +69,16 @@ class WorkoutController extends Controller
      */
     public function update(Request $request, Workout $workout)
     {
-        //
+        $validData = $request->validate([
+            'datetime' => 'required|date',
+            'split_id' => 'numeric|nullable',
+            'calories' => 'numeric|nullable',
+            'time' => 'numeric|nullable',
+        ]);
+
+        $workout->update($validData);
+
+        return to_route('workouts.index');
     }
 
     /**
@@ -68,6 +86,8 @@ class WorkoutController extends Controller
      */
     public function destroy(Workout $workout)
     {
-        //
+        $workout->delete();
+
+        return to_route('workouts.index');
     }
 }

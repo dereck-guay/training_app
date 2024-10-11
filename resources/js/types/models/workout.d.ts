@@ -4,8 +4,8 @@ type Workout = {
     split_id: number
 
     datetime: string;
-    calories: number;
-    time: number;
+    calories: number | null;
+    time: number | null;
 
     created_at: string;
     updated_at: string;

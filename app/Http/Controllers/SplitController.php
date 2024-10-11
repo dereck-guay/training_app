@@ -52,7 +52,6 @@ class SplitController extends Controller
      */
     public function show(Split $split)
     {
-        $split->load('exercises');
         return inertia('app/splits/show/page', compact(
             'split',
         ));
