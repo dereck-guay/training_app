@@ -10,9 +10,9 @@ class WorkoutController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $workouts = Workout::search();
+        $workouts = Workout::search($request->all());
 
         return inertia('app/workouts/index/page', compact(
             'workouts'

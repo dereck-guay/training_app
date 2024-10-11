@@ -1,24 +1,14 @@
 import Link from '@/components/ui/link';
-import { router } from '@inertiajs/react';
 import { format } from 'date-fns';
 import { DataTable } from '../../../../../components/dataware/DataTable';
 import { useWorkoutsContext } from '../page.hook';
 
 const WorkoutsTable = () => {
-    const workouts = useWorkoutsContext();
-
-    function handleRowClick(workout: Workout) {
-        router.visit(
-            route('workouts.show', {
-                workout: workout.id,
-            }),
-        );
-    }
-
+    const { workouts } = useWorkoutsContext();
     return (
         <div>
             <DataTable
-                data={workouts}
+                data={workouts!}
                 columns={[
                     {
                         header: 'Date',

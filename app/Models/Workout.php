@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Scopes\UserOwnedScope;
+use App\SearchableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class Workout extends Model
 {
     use HasFactory;
+    use SearchableTrait;
 
     protected static function booted()
     {
@@ -23,10 +25,19 @@ class Workout extends Model
 
     static public function search($params = [])
     {
-        $query = self::query();
+        $query = self::query()->select('workouts.*');
+        $query->join('splits', 'splits.id', 'workouts.split_id');
+
+        self::process_keywords(
+            $query,
+            data_get($params, 'keywords', ''),
+            [
+                'splits.name',
+                'workouts.datetime'
+            ]
+        );
 
         $query->with('split');
-
         return $query->get();
     }
 }

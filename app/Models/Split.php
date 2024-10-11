@@ -12,6 +12,7 @@ class Split extends Model
     use HasFactory;
     use SearchableTrait;
 
+    static public $isListable = true;
     protected $guarded = [];
 
     protected static function booted()
@@ -22,11 +23,6 @@ class Split extends Model
     public function workouts()
     {
         return $this->hasMany(Workout::class);
-    }
-
-    public function exercises()
-    {
-        return $this->belongsToMany(Exercise::class, 'split_exercise', 'split_id', 'exercise_id');
     }
 
     static public function search($params = [])

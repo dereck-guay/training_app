@@ -14,6 +14,6 @@ class UserOwnedScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->where('user_id', Auth::id());
+        $builder->where($model->qualifyColumn('user_id'), Auth::id());
     }
 }

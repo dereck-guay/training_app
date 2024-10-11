@@ -91,8 +91,6 @@ class SplitController extends Controller
     {
         $split->workouts()->delete();
 
-        $split->exercises()->detach();
-
         $split->delete();
 
         return to_route('splits.index');
