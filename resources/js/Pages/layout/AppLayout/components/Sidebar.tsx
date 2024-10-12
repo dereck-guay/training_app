@@ -1,5 +1,6 @@
+import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from '@inertiajs/react';
-import { Dumbbell } from 'lucide-react';
 import { FC } from 'react';
 
 type SidebarProps = FC<{
@@ -13,7 +14,10 @@ const Sidebar: SidebarProps = ({ children }) => {
         <aside className="h-screen w-60 min-w-60 border-r p-4">
             <div className="mb-4 flex h-10 items-center">
                 <h1 className="flex items-center gap-2 text-xl font-bold">
-                    <Dumbbell className="size-8 fill-primary/30 stroke-primary" />
+                    <FontAwesomeIcon
+                        icon={faDumbbell}
+                        className="size-8 text-primary"
+                    />
                     Training Tracker
                 </h1>
             </div>
