@@ -20,6 +20,11 @@ class Split extends Model
         static::addGlobalScope(new UserOwnedScope);
     }
 
+    public function days()
+    {
+        return $this->hasMany(Day::class);
+    }
+
     public function workouts()
     {
         return $this->hasMany(Workout::class);
