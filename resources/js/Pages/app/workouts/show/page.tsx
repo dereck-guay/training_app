@@ -13,7 +13,9 @@ const WorkoutShowPage: FC<WorkoutShowPageProps> = ({ workout }) => {
                 title={`${format(workout.datetime, 'PP')} ${workout.split?.name} Workout`}
             />
 
-            {format(workout.datetime, 'PPpp')}
+            <h1 className="text-lg font-bold">
+                {format(workout.datetime, 'PP h:mm aa')}
+            </h1>
         </div>
     );
 };

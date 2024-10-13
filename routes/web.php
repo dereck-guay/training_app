@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DayController;
 use App\Http\Controllers\SplitController;
 use App\Http\Controllers\WorkoutController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,11 @@ Route::group([
 
     Route::resource('workouts', WorkoutController::class);
     Route::resource('splits', SplitController::class);
+
+    Route::group(['prefix' => 'days'], function () {
+        Route::post('/', [DayController::class, 'store'])->name('days.store');
+        Route::post('/{day}', [DayController::class, 'store'])->name('days.update');
+    });
 });
 
 Route::group([
@@ -25,8 +31,8 @@ Route::group([
     'middleware' => ['auth', 'verified']
 ], function () {
     Route::get('/listable/{entity}', [GenericController::class, 'list'])->name('generic.list');
-    Route::post('/savable/{entity}', [GenericController::class, 'list'])->name('generic.save');
-    Route::delete('/deletable/{entity}', [GenericController::class, 'list'])->name('generic.delete');
+    Route::post('/savable/{entity}', [GenericController::class, 'save'])->name('generic.save');
+    Route::delete('/deletable/{entity}', [GenericController::class, 'delete'])->name('generic.delete');
 });
 
 require __DIR__ . '/auth.php';

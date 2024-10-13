@@ -15,7 +15,7 @@ import {
 import { cn } from '@/lib/utils';
 import { format, parse } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 type DateTimePickerProps = {
     value?: string | null; // Accepts the SQL date string.
@@ -53,6 +53,14 @@ const DateTimePicker: FC<DateTimePickerProps> = ({
     const formatSQLDate = (date: Date): string => {
         return format(date, 'yyyy-MM-dd HH:mm:ss');
     };
+
+    useEffect(() => {
+        if (value) {
+            const date = parseSQLDate(value);
+            setSelectedHour(date.getHours().toString().padStart(2, '0'));
+            setSelectedMinute(date.getMinutes().toString().padStart(2, '0'));
+        }
+    }, [value]);
 
     const handleDateSelect = (date: Date | undefined) => {
         if (date) {

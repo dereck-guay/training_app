@@ -5,40 +5,41 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { router } from '@inertiajs/react';
 import { FormEvent } from 'react';
+import { useGenericListable } from './GenericListable.hook';
 
-const SplitsToolbar = () => {
+const GenericListableToolbar = () => {
     const queryParams = new URLSearchParams(window.location.search);
-    const initialKeywords = queryParams.get('keywords') ?? '';
+    const { entity } = useGenericListable();
 
     function handleSearchChange(e: FormEvent<HTMLInputElement>) {
-        const newValue = e.currentTarget.value;
         router.reload({
             data: {
-                keywords: newValue,
+                keywords: e.currentTarget.value,
             },
         });
     }
 
     return (
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4 flex items-center justify-between">
             <div>
                 <Input
-                    className="bg-background"
-                    placeholder="Search splits"
-                    defaultValue={initialKeywords}
+                    placeholder="Search keywords..."
+                    defaultValue={queryParams.get('keywords') ?? ''}
                     onChange={handleSearchChange}
                 />
             </div>
             <div>
-                <SheetTrigger asChild>
-                    <Button>
-                        <FontAwesomeIcon icon={faPlusCircle} />
-                        New Split
-                    </Button>
-                </SheetTrigger>
+                {entity && (
+                    <SheetTrigger asChild>
+                        <Button>
+                            <FontAwesomeIcon icon={faPlusCircle} />
+                            New {entity}
+                        </Button>
+                    </SheetTrigger>
+                )}
             </div>
         </div>
     );
 };
 
-export default SplitsToolbar;
+export default GenericListableToolbar;

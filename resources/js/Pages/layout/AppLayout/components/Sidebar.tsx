@@ -16,7 +16,7 @@ const Sidebar: SidebarProps = ({ children }) => {
                 <h1 className="flex items-center gap-2 text-xl font-bold">
                     <FontAwesomeIcon
                         icon={faDumbbell}
-                        className="size-8 text-primary"
+                        className="size-7 text-primary"
                     />
                     Training Tracker
                 </h1>

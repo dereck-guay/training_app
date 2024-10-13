@@ -20,9 +20,24 @@ class Workout extends Model
         static::addGlobalScope(new UserOwnedScope);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function split()
     {
         return $this->belongsTo(Split::class);
+    }
+
+    public function day()
+    {
+        return $this->belongsTo(Day::class);
+    }
+
+    public function series()
+    {
+        return $this->hasMany(Serie::class);
     }
 
     static public function search($params = [])

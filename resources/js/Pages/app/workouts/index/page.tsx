@@ -49,9 +49,9 @@ const WorkoutIndexPage: FC<WorkoutIndexPageProps> = ({ workouts }) => {
             }}
         >
             <Head title="Workouts" />
+
             <Sheet open={isWorkoutFormOpen} onOpenChange={setWorkoutFormOpen}>
                 <div className="flex flex-col gap-4">
-                    <WorkoutToolbar />
                     <Card>
                         <CardHeader>
                             <CardTitle>Workouts</CardTitle>
@@ -60,6 +60,7 @@ const WorkoutIndexPage: FC<WorkoutIndexPageProps> = ({ workouts }) => {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
+                            <WorkoutToolbar />
                             <WorkoutsTable />
                         </CardContent>
                     </Card>

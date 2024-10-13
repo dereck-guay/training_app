@@ -19,4 +19,19 @@ class GenericController extends Controller
 
         return GenericResponseDTO::success($records);
     }
+
+    public function delete(Request $request, $entity)
+    {
+        $className = "\App\Models\\$entity";
+
+
+        if (! property_exists($className, 'isDeletable')) {
+            return GenericResponseDTO::failure("$entity is not deletable.");
+        }
+
+        $records = $className::search($request->all());
+        $records->each(fn($record) => $record->delete());
+
+        return back();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Day;
 use App\Models\Exercise;
 use App\Models\Split;
 use Illuminate\Http\Request;
@@ -50,10 +51,16 @@ class SplitController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Split $split)
+    public function show(Request $request, Split $split)
     {
+        $days = Day::search([
+            ...$request->all(),
+            'split_id' => $split->id,
+        ]);
+
         return inertia('app/splits/show/page', compact(
             'split',
+            'days'
         ));
     }
 

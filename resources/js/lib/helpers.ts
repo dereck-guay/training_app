@@ -6,15 +6,16 @@ import { router } from '@inertiajs/react';
  * @param entity Model name of the records to delete.
  * @param ids CSV value of all the ids to delete
  */
-export function deleteEntity(entity: string, ids: string | number, successRoute: string) {
-    router.post(
+export function deleteEntity(entity: string, ids: string | number, successRoute: string, extraData = {}) {
+    router.delete(
         route('generic.delete', {
             entity: entity,
         }),
         {
-            ids: ids,
-        },
-        {
+            data: {
+                ...extraData,
+                ids: ids,
+            },
             onSuccess: () => router.visit(successRoute),
         },
     );

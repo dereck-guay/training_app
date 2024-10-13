@@ -49,7 +49,6 @@ const SplitIndexPage: FC<SplitIndexPageProps> = ({ splits }) => {
             <Head title="Splits" />
             <Sheet open={isSplitFormOpen} onOpenChange={setSplitFormOpen}>
                 <div className="flex flex-col gap-4">
-                    <SplitsToolbar />
                     <Card>
                         <CardHeader>
                             <CardTitle>Splits</CardTitle>
@@ -59,6 +58,7 @@ const SplitIndexPage: FC<SplitIndexPageProps> = ({ splits }) => {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
+                            <SplitsToolbar />
                             <SplitsTable />
                         </CardContent>
                     </Card>
