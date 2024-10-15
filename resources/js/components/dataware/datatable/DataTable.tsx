@@ -1,4 +1,3 @@
-import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';
 import {
     Table,
     TableBody,
@@ -15,6 +14,7 @@ import {
     Table as TableType,
     useReactTable,
 } from '@tanstack/react-table';
+import DataTableRow from './DataTableRow';
 
 declare module '@tanstack/react-table' {
     interface ColumnMeta<TData, TValue> {
@@ -22,12 +22,23 @@ declare module '@tanstack/react-table' {
     }
 }
 
+export type WithId<TData> = TData & { id: number };
+
 interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[];
-    data: TData[];
-    contextMenu?: (row: Row<TData>, table: TableType<TData>) => React.ReactNode;
-    onRowClick?: (row: Row<TData>, table: TableType<TData>) => void;
-    onRowDblClick?: (row: Row<TData>, table: TableType<TData>) => void;
+    columns: ColumnDef<WithId<TData>, TValue>[];
+    data: WithId<TData>[];
+    contextMenu?: (
+        row: Row<WithId<TData>>,
+        table: TableType<WithId<TData>>,
+    ) => React.ReactNode;
+    onRowClick?: (
+        row: Row<WithId<TData>>,
+        table: TableType<WithId<TData>>,
+    ) => void;
+    onRowDblClick?: (
+        row: Row<WithId<TData>>,
+        table: TableType<WithId<TData>>,
+    ) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -41,7 +52,10 @@ export function DataTable<TData, TValue>({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        initialState: {},
+        getRowId: (record) => record.id.toString(),
+        debugTable: true,
+        debugHeaders: true,
+        debugColumns: true,
     });
 
     return (
@@ -67,42 +81,18 @@ export function DataTable<TData, TValue>({
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <ContextMenu key={row.id}>
-                                    <ContextMenuTrigger asChild>
-                                        <TableRow
-                                            onClick={() =>
-                                                onRowClick &&
-                                                onRowClick(row, table)
-                                            }
-                                            onDoubleClick={() =>
-                                                onRowDblClick &&
-                                                onRowDblClick(row, table)
-                                            }
-                                        >
-                                            {row
-                                                .getVisibleCells()
-                                                .map((cell) => (
-                                                    <TableCell
-                                                        key={cell.id}
-                                                        className={
-                                                            cell.column
-                                                                .columnDef.meta
-                                                                ?.className
-                                                        }
-                                                    >
-                                                        {flexRender(
-                                                            cell.column
-                                                                .columnDef.cell,
-                                                            cell.getContext(),
-                                                        )}
-                                                    </TableCell>
-                                                ))}
-                                        </TableRow>
-                                    </ContextMenuTrigger>
-                                    {contextMenu && contextMenu(row, table)}
-                                </ContextMenu>
-                            ))
+                            table
+                                .getRowModel()
+                                .rows.map((row) => (
+                                    <DataTableRow
+                                        key={row.id}
+                                        row={row}
+                                        table={table}
+                                        onRowClick={onRowClick}
+                                        onRowDblClick={onRowDblClick}
+                                        contextMenu={contextMenu}
+                                    />
+                                ))
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length}>
