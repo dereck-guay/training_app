@@ -34,7 +34,19 @@ class DayController extends Controller
 
     public function update(Request $request, Day $day)
     {
-        dd($request->all());
+        $split = Split::findOrFail($request->get('split_id'));
+
+        if ($split->user->id != Auth::id()) {
+            abort('401', 'Unauthorized');
+        }
+
+        $validData = $request->validate([
+            'split_id' => 'required|numeric',
+            'name' => 'required|max:50'
+        ]);
+
+        $day->update($validData);
+
         return back();
     }
 }

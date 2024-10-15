@@ -69,7 +69,7 @@ const GenericListable = <TData, TFormProps>({
         const oldProps = form.props;
         const newProps = {
             ...oldProps,
-            selectedRecord,
+            record: selectedRecord,
             onSave: handleFormSave,
         };
 

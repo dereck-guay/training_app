@@ -1,4 +1,4 @@
-import { DataTable } from '@/components/dataware/DataTable';
+import { DataTable } from '@/components/dataware/datatable/DataTable';
 import { Button } from '@/components/ui/button';
 import Link from '@/components/ui/link';
 import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons';

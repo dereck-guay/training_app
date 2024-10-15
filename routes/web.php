@@ -22,7 +22,7 @@ Route::group([
 
     Route::group(['prefix' => 'days'], function () {
         Route::post('/', [DayController::class, 'store'])->name('days.store');
-        Route::post('/{day}', [DayController::class, 'store'])->name('days.update');
+        Route::put('/{day}', [DayController::class, 'update'])->name('days.update');
     });
 });
 

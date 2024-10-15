@@ -6,17 +6,16 @@ import { useForm, usePage } from '@inertiajs/react';
 import { FC, FormEvent } from 'react';
 
 interface DayFormProps {
-    day?: Day | null;
+    record?: Day | null;
     onSave?: () => void;
 }
 
-const DayForm: FC<DayFormProps> = ({ day, onSave }) => {
+const DayForm: FC<DayFormProps> = ({ record, onSave }) => {
     const split = usePage().props.split as Split;
-    console.log(split);
 
     const { data, setData, post, processing, errors, put } = useForm({
         split_id: split.id,
-        name: '',
+        name: record?.name ?? '',
     });
 
     function submit(e: FormEvent) {
@@ -35,10 +34,11 @@ const DayForm: FC<DayFormProps> = ({ day, onSave }) => {
             },
         };
 
-        if (!!day) {
+        console.log(record);
+        if (!!record) {
             put(
                 route('days.update', {
-                    day: day.id,
+                    day: record.id,
                 }),
                 options,
             );

@@ -3,7 +3,7 @@ import Link from '@/components/ui/link';
 import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
-import { DataTable } from '../../../../../components/dataware/DataTable';
+import { DataTable } from '../../../../../components/dataware/datatable/DataTable';
 import { useWorkoutsContext } from '../page.hook';
 
 const WorkoutsTable = () => {
