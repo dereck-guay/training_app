@@ -1,10 +1,18 @@
 import GenericListable from '@/components/generic/listable/GenericListable';
 import { Button } from '@/components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
 import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Head } from '@inertiajs/react';
 import { FC } from 'react';
 import DayForm from './components/DayForm';
+import SortableTest from './components/SortableTest';
 
 interface SplitShowPageProps {
     split: Split;
@@ -19,6 +27,16 @@ const SplitShowPage: FC<SplitShowPageProps> = ({ split, days }) => (
             <div className="col-span-full">
                 <h1 className="text-xl font-bold">{split.name}</h1>
             </div>
+
+            <Card className="col-span-full">
+                <CardHeader>
+                    <CardTitle>Sortable Test</CardTitle>
+                    <CardDescription>Testing DnD Kit Sortable</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <SortableTest />
+                </CardContent>
+            </Card>
 
             <GenericListable
                 entity="Day"

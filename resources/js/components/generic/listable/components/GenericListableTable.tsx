@@ -9,8 +9,6 @@ const GenericListableTable = () => {
     return (
         <div>
             <DataTable
-                onDragEnds={(newData) => setTableData(newData)}
-                isDraggable
                 data={tableData!}
                 columns={columns({ editRecord, deleteRecord })}
             />
