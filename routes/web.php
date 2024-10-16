@@ -12,12 +12,6 @@ Route::get('/', function () {
     return to_route('dashboard');
 });
 
-Route::get('/_dnd_test', function () {
-    $workouts = Workout::all();
-
-    return inertia('app/DndTest', compact('workouts'));
-});
-
 Route::group([
     'prefix' => 'app',
     'middleware' => ['auth', 'verified']
