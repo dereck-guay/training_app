@@ -1,20 +1,13 @@
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { flexRender, Row, Table } from '@tanstack/react-table';
-import { WithId } from './DataTable';
 
 interface DataTableRowProps<TData> {
-    row: Row<WithId<TData>>;
-    table: Table<WithId<TData>>;
-    onRowClick?: (row: Row<WithId<TData>>, table: Table<WithId<TData>>) => void;
-    onRowDblClick?: (
-        row: Row<WithId<TData>>,
-        table: Table<WithId<TData>>,
-    ) => void;
-    contextMenu?: (
-        row: Row<WithId<TData>>,
-        table: Table<WithId<TData>>,
-    ) => React.ReactNode;
+    row: Row<TData>;
+    table: Table<TData>;
+    onRowClick?: (row: Row<TData>, table: Table<TData>) => void;
+    onRowDblClick?: (row: Row<TData>, table: Table<TData>) => void;
+    contextMenu?: (row: Row<TData>, table: Table<TData>) => React.ReactNode;
 }
 
 const DataTableRow = <TData,>({

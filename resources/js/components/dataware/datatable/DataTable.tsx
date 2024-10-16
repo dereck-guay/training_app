@@ -22,27 +22,18 @@ declare module '@tanstack/react-table' {
     }
 }
 
-export type WithId<TData> = TData & { id: number };
-
 interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<WithId<TData>, TValue>[];
-    data: WithId<TData>[];
-    contextMenu?: (
-        row: Row<WithId<TData>>,
-        table: TableType<WithId<TData>>,
-    ) => React.ReactNode;
-    onRowClick?: (
-        row: Row<WithId<TData>>,
-        table: TableType<WithId<TData>>,
-    ) => void;
-    onRowDblClick?: (
-        row: Row<WithId<TData>>,
-        table: TableType<WithId<TData>>,
-    ) => void;
+    columns: ColumnDef<TData, TValue>[];
+    data: TData[];
+    getRowId?: (record: TData) => string;
+    contextMenu?: (row: Row<TData>, table: TableType<TData>) => React.ReactNode;
+    onRowClick?: (row: Row<TData>, table: TableType<TData>) => void;
+    onRowDblClick?: (row: Row<TData>, table: TableType<TData>) => void;
 }
 
 export function DataTable<TData, TValue>({
     data,
+    getRowId,
     columns,
     contextMenu,
     onRowClick,
@@ -52,7 +43,7 @@ export function DataTable<TData, TValue>({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        getRowId: (record) => record.id.toString(),
+        getRowId: getRowId,
         debugTable: true,
         debugHeaders: true,
         debugColumns: true,

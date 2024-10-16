@@ -26,6 +26,7 @@ import GenericListableToolbar from './components/GenericListableToolbar';
 type GenericListableProps<TData, TFormProps> = {
     entity?: string;
     data: TData[];
+    getRowId?: (record: TData) => string;
     columns: (props: ColumnFunctionProps<TData>) => ColumnDef<TData>[];
     title?: string | React.ReactNode;
     description?: string | React.ReactNode;
@@ -38,6 +39,7 @@ type GenericListableProps<TData, TFormProps> = {
 const GenericListable = <TData, TFormProps>({
     entity,
     data,
+    getRowId,
     columns,
     title,
     description,
@@ -81,6 +83,7 @@ const GenericListable = <TData, TFormProps>({
             value={{
                 entity: entity,
                 data: data,
+                getRowId,
                 columns: columns,
                 setIsFormOpen,
                 setSelectedRecord,

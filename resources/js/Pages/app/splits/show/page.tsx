@@ -23,6 +23,7 @@ const SplitShowPage: FC<SplitShowPageProps> = ({ split, days }) => (
             <GenericListable
                 entity="Day"
                 data={days}
+                getRowId={(day) => day.id.toString()}
                 title="Days"
                 description="A split day is a collection of series to do on any given
                         day of a workout split. Below you can manage, rearrange,

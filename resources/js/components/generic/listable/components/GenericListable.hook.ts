@@ -12,6 +12,7 @@ export type ColumnFunctionProps<TData> = {
 type GenericListableContextType<TData> = {
     entity?: string;
     data: TData
+    getRowId?: (record: TData) => string;
     columns: (props: ColumnFunctionProps<TData>) => ColumnDef<TData>[],
     setSelectedRecord: Dispatch<SetStateAction<TData | null>>
     setIsFormOpen: Dispatch<SetStateAction<boolean>>
@@ -27,7 +28,7 @@ export function useGenericListable() {
         throw new Error('GenericListableContext must be used within its context provider.');
     }
 
-    const { entity, data, columns, setSelectedRecord, setIsFormOpen } = context;
+    const { entity, data, getRowId, columns, setSelectedRecord, setIsFormOpen } = context;
 
     function editRecord(record: typeof data[number]) {
         setSelectedRecord(record);
@@ -46,6 +47,7 @@ export function useGenericListable() {
     return {
         entity,
         data,
+        getRowId,
         columns,
         editRecord,
         deleteRecord,
