@@ -12,6 +12,7 @@ const WorkoutsTable = () => {
         <div>
             <DataTable
                 data={workouts!}
+                getId={(workout) => workout.id.toString()}
                 columns={[
                     {
                         header: 'Date',

@@ -13,6 +13,7 @@ class Day extends Model
     use SearchableTrait;
 
     static public $isDeletable = true;
+    static public $isOrderable = true;
 
     protected $guarded = [];
 

@@ -12,6 +12,7 @@ const SplitsTable = () => {
         <div>
             <DataTable
                 data={splits}
+                getId={(split) => split.id.toString()}
                 columns={[
                     {
                         header: 'Name',

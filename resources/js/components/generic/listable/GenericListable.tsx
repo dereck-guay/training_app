@@ -26,7 +26,7 @@ import GenericListableToolbar from './components/GenericListableToolbar';
 type GenericListableProps<TData, TFormProps> = {
     entity?: string;
     data: TData[];
-    getRowId?: (record: TData) => string;
+    getId: (record: TData) => string;
     columns: (props: ColumnFunctionProps<TData>) => ColumnDef<TData>[];
     title?: string | React.ReactNode;
     description?: string | React.ReactNode;
@@ -34,12 +34,13 @@ type GenericListableProps<TData, TFormProps> = {
     sheetDescription?: string | React.ReactNode;
     form?: ReactElement<TFormProps>;
     className?: string;
+    onDragEnd?: (data: TData[]) => void;
 };
 
 const GenericListable = <TData, TFormProps>({
     entity,
     data,
-    getRowId,
+    getId,
     columns,
     title,
     description,
@@ -47,15 +48,13 @@ const GenericListable = <TData, TFormProps>({
     sheetDescription,
     form,
     className,
+    onDragEnd,
 }: GenericListableProps<TData, TFormProps>) => {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState<TData | null>(null);
 
     function handleOpenChange(setOpen: boolean) {
-        if (!setOpen) {
-            setSelectedRecord(null);
-        }
-
+        if (!setOpen) setSelectedRecord(null);
         setIsFormOpen(setOpen);
     }
 
@@ -83,7 +82,8 @@ const GenericListable = <TData, TFormProps>({
             value={{
                 entity: entity,
                 data: data,
-                getRowId,
+                onDragEnd,
+                getId,
                 columns: columns,
                 setIsFormOpen,
                 setSelectedRecord,

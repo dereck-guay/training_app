@@ -6,9 +6,16 @@ use App\Http\Controllers\SplitController;
 use App\Http\Controllers\WorkoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GenericController;
+use App\Models\Workout;
 
 Route::get('/', function () {
     return to_route('dashboard');
+});
+
+Route::get('/_dnd_test', function () {
+    $workouts = Workout::all();
+
+    return inertia('app/DndTest', compact('workouts'));
 });
 
 Route::group([
@@ -32,6 +39,7 @@ Route::group([
 ], function () {
     Route::get('/listable/{entity}', [GenericController::class, 'list'])->name('generic.list');
     Route::post('/savable/{entity}', [GenericController::class, 'save'])->name('generic.save');
+    Route::post('/orderable/{entity}', [GenericController::class, 'order'])->name('generic.order');
     Route::delete('/deletable/{entity}', [GenericController::class, 'delete'])->name('generic.delete');
 });
 

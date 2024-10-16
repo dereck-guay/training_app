@@ -20,3 +20,16 @@ export function deleteEntity(entity: string, ids: string | number, successRoute:
         },
     );
 }
+
+export function orderEntity(entity: string, ids: string | number, successRoute: string, extraData = {}) {
+    router.post(
+        route('generic.order', {
+            entity
+        }),  {
+            ...extraData,
+            ids
+        }, {
+            onSuccess: () => router.visit(successRoute),
+        }
+    )
+}
