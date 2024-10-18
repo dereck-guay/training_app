@@ -7,7 +7,11 @@ import { router } from '@inertiajs/react';
 import { FormEvent } from 'react';
 import { useGenericListable } from './GenericListable.hook';
 
-const GenericListableToolbar = () => {
+interface GenericListableToolbar {
+    isSearchable?: boolean;
+}
+
+const GenericListableToolbar = ({ isSearchable = false }) => {
     const queryParams = new URLSearchParams(window.location.search);
     const { entity } = useGenericListable();
 
@@ -22,11 +26,13 @@ const GenericListableToolbar = () => {
     return (
         <div className="mb-4 flex items-center justify-between">
             <div>
-                <Input
-                    placeholder="Search keywords..."
-                    defaultValue={queryParams.get('keywords') ?? ''}
-                    onChange={handleSearchChange}
-                />
+                {isSearchable && (
+                    <Input
+                        placeholder="Search keywords..."
+                        defaultValue={queryParams.get('keywords') ?? ''}
+                        onChange={handleSearchChange}
+                    />
+                )}
             </div>
             <div>
                 {entity && (

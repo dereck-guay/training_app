@@ -33,14 +33,14 @@ class WorkoutController extends Controller
 
     public function show(Workout $workout)
     {
-
-        $workout->load(['split', 'day']);
+        $split = $workout->split;
         $series = Serie::search([
             'workout_id' => $workout->id,
         ]);
 
         return inertia('app/workouts/show/page', compact(
             'workout',
+            'split',
             'series'
         ));
     }

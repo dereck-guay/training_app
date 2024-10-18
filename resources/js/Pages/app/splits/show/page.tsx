@@ -38,6 +38,7 @@ const SplitShowPage: FC<SplitShowPageProps> = ({ split, days }) => {
                 </div>
 
                 <GenericListable
+                    className="col-span-1"
                     entity="Day"
                     data={days}
                     getId={(day) => day.id.toString()}

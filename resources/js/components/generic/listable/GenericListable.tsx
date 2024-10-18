@@ -35,6 +35,7 @@ type GenericListableProps<TData, TFormProps> = {
     form?: ReactElement<TFormProps>;
     className?: string;
     onDragEnd?: (data: TData[]) => void;
+    isSearchable?: boolean;
 };
 
 const GenericListable = <TData, TFormProps>({
@@ -49,6 +50,7 @@ const GenericListable = <TData, TFormProps>({
     form,
     className,
     onDragEnd,
+    isSearchable = false,
 }: GenericListableProps<TData, TFormProps>) => {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState<TData | null>(null);
@@ -98,7 +100,7 @@ const GenericListable = <TData, TFormProps>({
                         )}
                     </CardHeader>
                     <CardContent>
-                        <GenericListableToolbar />
+                        <GenericListableToolbar isSearchable={isSearchable} />
                         <GenericListableTable />
                     </CardContent>
                 </Card>
